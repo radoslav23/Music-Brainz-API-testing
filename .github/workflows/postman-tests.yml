@@ -1,9 +1,11 @@
 name: Run Postman API Tests (Newman)
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:        # manual trigger
   push:
-    branches: [ "main" ]
+    branches: [ "main" ]    # run on push to main
+  schedule:
+    - cron: "0 0 * * *"     # run every day at 00:00 UTC (2 AM Bulgaria time)
 
 jobs:
   postman-tests:
