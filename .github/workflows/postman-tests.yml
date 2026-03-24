@@ -6,15 +6,15 @@ on:
   
 jobs:
   postman-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Postman CLI
-        run: |
-          curl -L https://dl-cli.pstmn.io/install/linux.sh | sh
+      - name: Install Postman CLI (Windows)
+  run: |
+    powershell -Command "iwr https://dl-cli.pstmn.io/install/windows.ps1 -UseBasicParsing | iex"
 
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
