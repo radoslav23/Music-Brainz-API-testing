@@ -11,13 +11,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Postman CLI
-  run: |
-    curl -L https://dl-cli.pstmn.io/install/linux.sh -o postmancli.sh
-    chmod +x postmancli.sh
-    ./postmancli.sh
+        run: |
+          curl -L https://dl-cli.pstmn.io/install/linux.sh -o postmancli.sh
+          echo "---- Installer first lines ----"
+          head -n 20 postmancli.sh
+          echo "--------------------------------"
+          chmod +x postmancli.sh
+          ./postmancli.sh
 
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
