@@ -15,6 +15,8 @@ jobs:
 
       - name: Install Postman CLI
         uses: postmanlabs/postman-cli-action@v1
+        with:
+    apiKey: ${{ secrets.POSTMAN_API_KEY }}
 
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
