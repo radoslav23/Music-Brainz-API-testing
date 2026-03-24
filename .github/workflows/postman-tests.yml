@@ -1,20 +1,22 @@
+name: Run Postman API Tests
+
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-  pull_request:
-  
+
 jobs:
   postman-tests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Postman CLI (Windows)
-  run: |
-    powershell -Command "iwr https://dl-cli.pstmn.io/install/windows.ps1 -UseBasicParsing | iex"
+      - name: Install Postman CLI
+        run: |
+          curl -L https://dl-cli.pstmn.io/install/linux.sh -o postmancli.sh
+          sh postmancli.sh
 
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
