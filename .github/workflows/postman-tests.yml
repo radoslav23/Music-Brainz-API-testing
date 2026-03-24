@@ -17,6 +17,7 @@ jobs:
         uses: postmanlabs/postman-cli-action@v1
         with:
           api-key: ${{ secrets.POSTMAN_API_KEY }}
+          command: ""   # <-- prevents the action from failing
 
       - name: Run MusicBrainz Test Collection
         run: postman collection run 4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707
