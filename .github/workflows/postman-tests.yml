@@ -1,4 +1,4 @@
-name: Run Postman API Tests
+name: Run Postman API Tests (Newman)
 
 on:
   workflow_dispatch:
@@ -18,11 +18,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Postman CLI via npm
-        run: npm install -g @postman/cli
-
-      - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Install Newman
+        run: npm install -g newman
 
       - name: Run MusicBrainz Test Collection
-        run: postman collection run 4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707
+        run: newman run https://api.postman.com/collections/4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707?apikey=${{ secrets.POSTMAN_API_KEY }}
