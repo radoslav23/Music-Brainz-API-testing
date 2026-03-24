@@ -13,9 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Postman CLI
-        run: |
-          curl -L https://dl-cli.pstmn.io/install/linux.sh | sh
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Postman CLI via npm
+        run: npm install -g @postman/cli
 
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
