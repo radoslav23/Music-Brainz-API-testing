@@ -1,0 +1,747 @@
+{
+  "info": {
+    "_postman_id": "81c74bdd-5f64-4631-b460-a74cf6fd5707",
+    "name": "MusicBrainz Basic API Tests (Digest Auth)",
+    "description": "Basic automated tests for MusicBrainz API using Digest Authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4784767",
+    "_collection_link": "https://go.postman.co/collection/4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Lookups",
+      "item": [
+        {
+          "name": "Artist Lookup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });",
+                  "pm.test(\"Artist has MBID\", function () { pm.expect(pm.response.json().id).to.exist; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "artist",
+                "5b11f4ce-a62d-471e-81fc-a69a8278c7da"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lookup for Invalid Artist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Error message exists\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"error\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/artist/1234?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "artist",
+                "1234"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Event Lookup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });",
+                  "pm.test(\"Event has MBID\", function () { pm.expect(pm.response.json().id).to.exist; });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/event/ef3be51f-7195-430d-aa13-d027b66eb51c?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "event",
+                "ef3be51f-7195-430d-aa13-d027b66eb51c"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Series Lookup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });",
+                  "pm.test(\"Series has MBID\", function () { pm.expect(pm.response.json().id).to.exist; });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/series/83af0baf-1913-450b-8a73-e71ec78d0899?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "series",
+                "83af0baf-1913-450b-8a73-e71ec78d0899"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Release Lookup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/release/41522144-166e-42d3-b087-9bf4c23b8a93?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "release",
+                "41522144-166e-42d3-b087-9bf4c23b8a93"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Recording Lookup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recording/611c1526-86d9-41a3-8a88-546d190b2ae6?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recording",
+                "611c1526-86d9-41a3-8a88-546d190b2ae6"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Artist Search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });",
+                  "pm.test(\"Search results exist\", function () { pm.expect(pm.response.json().artists.length).to.be.above(0); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/artist?query=nirvana&limit=5&fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "artist"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "nirvana"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Recording Search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Recordings array exists\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.recordings).to.be.an(\"array\");",
+                  "});",
+                  "",
+                  "pm.test(\"At least one recording contains 'Bohemian Rhapsody'\", function () {",
+                  "    const recordings = pm.response.json().recordings;",
+                  "    const found = recordings.some(r => r.title.toLowerCase().includes(\"bohemian rhapsody\"));",
+                  "    pm.expect(found).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recording?query=bohemian+rhapsody&limit=5&fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recording"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "bohemian+rhapsody"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "Get User Public Collections",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response is JSON\", function () { pm.response.to.be.json; });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/collection/7598622b-e4af-429a-84f8-acb8270b90d1?fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "collection",
+                "7598622b-e4af-429a-84f8-acb8270b90d1"
+              ],
+              "query": [
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Genre Lists",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Genres array exists\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.genres).to.be.an(\"array\");",
+                  "});",
+                  "",
+                  "pm.test(\"Exactly 10 genres returned\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.genres.length).to.eql(10);",
+                  "});",
+                  "",
+                  "pm.test(\"Each genre has a name\", function () {",
+                  "    const genres = pm.response.json().genres;",
+                  "    genres.forEach(g => {",
+                  "        pm.expect(g).to.have.property(\"name\");",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/genre/all?limit=10&fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "genre",
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Browse",
+      "item": [
+        {
+          "name": "Browse Releases by Artist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Releases array exists\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.releases).to.be.an(\"array\");",
+                  "});",
+                  "",
+                  "pm.test(\"Releases array has at least 1 item\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.releases.length).to.be.above(0);",
+                  "});",
+                  "",
+                  "pm.test(\"Each release has id and title\", function () {",
+                  "    const releases = pm.response.json().releases;",
+                  "    releases.forEach(r => {",
+                  "        pm.expect(r).to.have.property(\"id\");",
+                  "        pm.expect(r).to.have.property(\"title\");",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/release?artist=65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab&limit=5&fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "release"
+              ],
+              "query": [
+                {
+                  "key": "artist",
+                  "value": "65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://musicbrainz.org/ws/2"
+    },
+    {
+      "key": "username",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "userAgent",
+      "value": "RadoslavTestSuite/1.0 (radoslav@example.com)"
+    },
+    {
+      "key": "clientId",
+      "value": "radoslav.app-1.0"
+    }
+  ]
+}
