@@ -4,32 +4,22 @@ It demonstrates how to structure API tests, organize a Postman collection, and r
 The goal is to provide a clean, professional example of API automation using a real public API with no authentication requirements.
 
 Features
-✔️ Organized Postman collection with folders (Lookups, Search, Browse, Public)
 
-✔️ Automated tests for status codes, JSON structure, and key fields
+- Organized Postman collection with folders (Lookups, Search, Browse, Public)
 
-✔️ Negative tests for invalid MBIDs
+- Automated tests for status codes, JSON structure, and key fields
 
-✔️ GitHub Actions workflow that runs the collection on every push
+- Negative tests for invalid MBIDs
 
-✔️ Optional scheduled nightly run
+- GitHub Actions workflow that runs the collection on every push
 
-✔️ Local execution using Postman CLI or Newman
+- Optional scheduled nightly run
 
-✔️ Fully open‑source and easy to extend
+- Local execution using Postman CLI or Newman
 
-Project Structure
-Code
-Music-Brainz-API-testing/
-│
-├── .github/
-│   └── workflows/
-│       └── postman-tests.yml     # CI pipeline running the collection
-│
-├── MusicBrainz Basic API Tests.postman_collection.json
-│                                   # Exported Postman collection (v2.1)
-│
-└── README.md                       # Project documentation
+- Fully open‑source and easy to extend
+
+
 How to Run Tests Locally
 Option 1 — Using Postman CLI
 Install Postman CLI
