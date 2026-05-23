@@ -21,6 +21,7 @@ Features
 
 
 How to Run Tests Locally
+
 Option 1 — Using Postman CLI
 Install Postman CLI
 
@@ -41,7 +42,9 @@ Run the collection:
 
 Code
 newman run "MusicBrainz Basic API Tests.postman_collection.json"
+
 Continuous Integration (GitHub Actions)
+
 This repository includes a workflow that automatically runs the Postman collection:
 
 on every push
@@ -53,10 +56,13 @@ optionally on a daily schedule
 The workflow file is located at:
 
 Code
+
 .github/workflows/postman-tests.yml
+
 It uses Newman to execute the collection and prints results directly in the GitHub Actions logs.
 
 What the Tests Cover
+
 Lookups
 Artist lookup
 
@@ -96,6 +102,7 @@ array structure
 presence of MBIDs
 
 Why MusicBrainz?
+
 MusicBrainz is a stable, public, free API with:
 
 predictable responses
