@@ -513,6 +513,72 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Release Search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Recordings array exists\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.recordings).to.be.an(\"array\");",
+                  "});",
+                  "",
+                  "pm.test(\"At least one recording contains 'Diana Ross'\", function () {",
+                  "    const recordings = pm.response.json().recordings;",
+                  "    const found = recordings.some(r => r.title.toLowerCase().includes(\"diana ross\"));",
+                  "    pm.expect(found).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/release?query=diana+ross&limit=5&fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "release"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "diana+ross"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -705,6 +771,79 @@
                 {
                   "key": "artist",
                   "value": "65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "fmt",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Browse Recordings by Release",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Releases array exists\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.releases).to.be.an(\"array\");",
+                  "});",
+                  "",
+                  "pm.test(\"Releases array has at least 1 item\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.releases.length).to.be.above(0);",
+                  "});",
+                  "",
+                  "pm.test(\"Each release has id and title\", function () {",
+                  "    const releases = pm.response.json().releases;",
+                  "    releases.forEach(r => {",
+                  "        pm.expect(r).to.have.property(\"id\");",
+                  "        pm.expect(r).to.have.property(\"title\");",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recording?release=435fc965-9121-461e-b8da-d9b505c9dc9b&limit=5&fmt=json",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recording"
+              ],
+              "query": [
+                {
+                  "key": "release",
+                  "value": "435fc965-9121-461e-b8da-d9b505c9dc9b"
                 },
                 {
                   "key": "limit",
