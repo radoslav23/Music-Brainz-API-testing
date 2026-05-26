@@ -77,7 +77,7 @@ Release lookup
 
 Recording lookup
 
-Search
+Search:
 
 Artist search
 
@@ -85,12 +85,20 @@ Recording search
 
 Release search
 
-Browse
+Public:
+
+Get user public collections
+
+Get genre lists
+
+Browse:
+
 Browse releases by artist
 
 Browse recordings by release
 
-Negative Tests
+Negative Tests:
+
 Invalid MBID returns 404
 
 Missing parameters return error
