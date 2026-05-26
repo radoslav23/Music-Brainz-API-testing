@@ -63,16 +63,22 @@ It uses Newman to execute the collection and prints results directly in the GitH
 
 What the Tests Cover
 
-Lookups
+Lookups:
+
 Artist lookup
+
+Lookup for invalid artist
+
+Event lookup
+
+Series lookup
 
 Release lookup
 
 Recording lookup
 
-Label lookup
-
 Search
+
 Artist search
 
 Recording search
