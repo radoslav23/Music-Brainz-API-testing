@@ -23,24 +23,25 @@ Features
 How to Run Tests Locally
 
 Option 1 — Using Postman CLI
+
 Install Postman CLI
 
 Log in:
 
-Code
 postman login
+
 Run the collection:
 
-Code
 postman collection run "MusicBrainz Basic API Tests.postman_collection.json"
+
 Option 2 — Using Newman
+
 Install Newman globally:
 
-Code
 npm install -g newman
+
 Run the collection:
 
-Code
 newman run "MusicBrainz Basic API Tests.postman_collection.json"
 
 Continuous Integration (GitHub Actions)
@@ -55,8 +56,6 @@ optionally on a daily schedule
 
 The workflow file is located at:
 
-Code
-
 .github/workflows/postman-tests.yml
 
 It uses Newman to execute the collection and prints results directly in the GitHub Actions logs.
@@ -68,6 +67,14 @@ Lookups:
 Artist lookup
 
 Lookup for invalid artist
+
+Lookup for invalid event
+
+Lookup for invalid series
+
+Lookup for invalid release
+
+Lookup for invalid recording
 
 Event lookup
 
@@ -99,9 +106,7 @@ Browse recordings by release
 
 Negative Tests:
 
-Invalid MBID returns 404
-
-Missing parameters return error
+Invalid MBID returns 400
 
 Each request includes Postman test scripts verifying:
 
