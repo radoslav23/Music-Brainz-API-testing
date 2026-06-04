@@ -32,10 +32,10 @@
                   "    return;\r",
                   "}\r",
                   "\r",
+                  "// Only run this test if API is healthy\r",
                   "pm.test(\"MusicBrainz API is available\", function () {\r",
                   "    pm.expect(pm.response.code).to.eql(200);\r",
                   "});\r",
-                  "\r",
                   ""
                 ],
                 "type": "text/javascript",
