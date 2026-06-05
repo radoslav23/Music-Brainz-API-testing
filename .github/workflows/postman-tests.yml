@@ -23,5 +23,26 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
+      - name: Check MusicBrainz availability
+        id: health
+        run: |
+          STATUS=$(curl \
+            --silent \
+            --output /dev/null \
+            --write-out "%{http_code}" \
+            --connect-timeout 10 \
+            --max-time 20 \
+            https://musicbrainz.org/ws/2/artist)
+
+          if [ "$STATUS" = "000" ] || [ "$STATUS" -ge 500 ]; then
+            echo "available=false" >> $GITHUB_OUTPUT
+          else
+            echo "available=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run MusicBrainz Test Collection
-        run: newman run https://api.postman.com/collections/4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707?apikey=${{ secrets.POSTMAN_API_KEY }}
+        if: steps.health.outputs.available == 'true'
+        run: |
+          newman run \
+            "https://api.postman.com/collections/4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707?apikey=${{ secrets.POSTMAN_API_KEY }}" \
+            --bail
