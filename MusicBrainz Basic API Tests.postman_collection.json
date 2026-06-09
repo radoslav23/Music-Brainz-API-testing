@@ -18,12 +18,6 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code >= 500) {",
-                  "    console.log(`API unavailable (${pm.response.code}). Stopping collection.`);",
-                  "    postman.setNextRequest(null);",
-                  "    return;",
-                  "}",
-                  "",
                   "pm.test(\"Status is 200\", function () {",
                   "    pm.response.to.have.status(200);",
                   "});",
@@ -1158,6 +1152,34 @@
           "response": []
         }
       ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "if (pm.response.code >= 401) {\r",
+          "     console.log(`API unavailable (${pm.response.code}). Stopping collection.`);\r",
+          "     postman.setNextRequest(null);\r",
+          "     return;\r",
+          " }"
+        ]
+      }
     }
   ],
   "variable": [
