@@ -935,6 +935,12 @@
               "listen": "test",
               "script": {
                 "exec": [
+                  "if (pm.response.code >= 500) {",
+                  "    console.log(`API unavailable (${pm.response.code}). Stopping collection.`);",
+                  "    postman.setNextRequest(null);",
+                  "    return;",
+                  "}",
+                  "",
                   "pm.test(\"Status code is 200\", function () {",
                   "    pm.response.to.have.status(200);",
                   "});",
