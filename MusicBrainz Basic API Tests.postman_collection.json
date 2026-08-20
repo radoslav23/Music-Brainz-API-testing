@@ -872,6 +872,78 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Event Search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Event has required fields\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"id\");",
+                  "    pm.expect(json).to.have.property(\"name\");",
+                  "    pm.expect(json).to.have.property(\"time\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Event name contains 'Saturday Night Live'\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.name.toLowerCase()).to.include(\"saturday night live\");",
+                  "});",
+                  "",
+                  "pm.test(\"Event has type-id\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json[\"type-id\"]).to.be.a(\"string\");",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "User-Agent",
+                "value": "{{userAgent}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/event/3f3d55be-c8b2-4631-8c55-329afc864329",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "event",
+                "3f3d55be-c8b2-4631-8c55-329afc864329"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
