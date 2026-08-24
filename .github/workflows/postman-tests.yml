@@ -10,8 +10,16 @@ on:
 jobs:
   postman-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        attempt: [1, 2, 3]
+      fail-fast: false
 
     steps:
+      - name: Wait before retry
+        if: matrix.attempt != 1
+        run: sleep 1800   # 30 minutes
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -32,8 +40,7 @@ jobs:
             --write-out "%{http_code}" \
             --connect-timeout 10 \
             --max-time 20 \
-            https://musicbrainz.org/ws/2/artist)
-
+            https://musicbrainz.org/ws/2/recording)
           if [ "$STATUS" = "000" ] || [ "$STATUS" -ge 500 ]; then
             echo "available=false" >> $GITHUB_OUTPUT
           else
