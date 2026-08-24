@@ -10,16 +10,8 @@ on:
 jobs:
   postman-tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        attempt: [1, 2, 3]
-      fail-fast: false
 
     steps:
-      - name: Wait before retry
-        if: matrix.attempt != 1
-        run: sleep 1800   # 30 minutes
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -31,25 +23,35 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
-      - name: Check MusicBrainz availability
-        id: health
+      - name: Run with retry logic (3 attempts, 30 min delay)
         run: |
-          STATUS=$(curl \
-            --silent \
-            --output /dev/null \
-            --write-out "%{http_code}" \
-            --connect-timeout 10 \
-            --max-time 20 \
-            https://musicbrainz.org/ws/2/recording)
-          if [ "$STATUS" = "000" ] || [ "$STATUS" -ge 500 ]; then
-            echo "available=false" >> $GITHUB_OUTPUT
-          else
-            echo "available=true" >> $GITHUB_OUTPUT
-          fi
+          for attempt in 1 2 3; do
+            echo "===== Attempt $attempt ====="
 
-      - name: Run MusicBrainz Test Collection
-        if: steps.health.outputs.available == 'true'
-        run: |
-          newman run \
-            "https://api.postman.com/collections/4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707?apikey=${{ secrets.POSTMAN_API_KEY }}" \
-            --bail
+            STATUS=$(curl \
+              --silent \
+              --output /dev/null \
+              --write-out "%{http_code}" \
+              --connect-timeout 10 \
+              --max-time 20 \
+              https://musicbrainz.org/ws/2/recording)
+
+            if [ "$STATUS" = "000" ] || [ "$STATUS" -ge 500 ]; then
+              echo "MusicBrainz unavailable (status $STATUS)"
+            else
+              echo "MusicBrainz available — running Newman..."
+              newman run \
+                "https://api.postman.com/collections/4784767-81c74bdd-5f64-4631-b460-a74cf6fd5707?apikey=${{ secrets.POSTMAN_API_KEY }}" \
+                --bail
+              echo "Tests succeeded on attempt $attempt"
+              exit 0
+            fi
+
+            if [ "$attempt" -lt 3 ]; then
+              echo "Waiting 30 minutes before retry..."
+              sleep 1800
+            fi
+          done
+
+          echo "All attempts failed — MusicBrainz still unavailable."
+          exit 1
