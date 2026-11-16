@@ -293,14 +293,18 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 400\", function () {",
-                  "    pm.response.to.have.status(400);",
-                  "});",
+                  "if (pm.response.code === 503) {",
+                  "    console.log(\"MusicBrainz temporarily unavailable\");",
+                  "} else {",
+                  "    pm.test(\"Status code is 400\", function () {",
+                  "        pm.response.to.have.status(400);",
+                  "    });",
                   "",
-                  "pm.test(\"Error message exists\", function () {",
-                  "    const json = pm.response.json();",
-                  "    pm.expect(json).to.have.property(\"error\");",
-                  "});"
+                  "    pm.test(\"Error message exists\", function () {",
+                  "        const json = pm.response.json();",
+                  "        pm.expect(json.error).to.eql(\"Invalid mbid.\");",
+                  "    });",
+                  "}"
                 ],
                 "type": "text/javascript",
                 "packages": {},
