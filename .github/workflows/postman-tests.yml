@@ -34,7 +34,7 @@ jobs:
               --write-out "%{http_code}" \
               --connect-timeout 10 \
               --max-time 20 \
-              https://musicbrainz.org/ws/2/recording)
+              https://musicbrainz.org/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json
 
             if [ "$STATUS" = "000" ] || [ "$STATUS" -ge 500 ]; then
               echo "MusicBrainz unavailable (status $STATUS)"
